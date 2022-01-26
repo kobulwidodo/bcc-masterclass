@@ -9,7 +9,7 @@ Please take note of this before planning to attempt this freepass challenge.
 
 During this pandemic, it is very difficult for students to find learning materials. but at the same time, students also need additional money to survive during the pandemic. BCC requires a developer to create an online class application system.
 
-This application is intended so that FILKOM students can learn and teach. To accomplish this quickly, BCC will need help. By this letter, we humbly invite you to join us on this journey to figure out the best solution. We cannot wait to see your ideas to overcome this problem
+This application is intended so that FILKOM students can learn and teach. To accomplish this quickly, BCC will need help. By this letter, we humbly invite you to join us on this journey to figure out the best solution. We cannot wait to see your ideas to overcome this problem.
 
 ## :star: Minimum Viable Product (MVP)
 
