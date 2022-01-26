@@ -2,7 +2,7 @@
 
 ### ⚠️⚠️⚠️
 ```
-Submissions from 2021 students will have much higher priority than submissions from 2020 students or higher.
+Submissions from 2021 students will have much higher priority than submissions from 2020, SAP, or higher students.
 Please take note of this before planning to attempt this freepass challenge.
 ```
 ## :love_letter: Invitation Letter
