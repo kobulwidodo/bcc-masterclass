@@ -1,0 +1,38 @@
+{
+  "name": "bcc-masterclass",
+  "version": "1.0.0",
+  "description": "BCC's online course backend app",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app",
+    "lint": "eslint --fix --ext .js,.jsx ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yerobalg/bcc-masterclass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yerobalg/bcc-masterclass/issues"
+  },
+  "homepage": "https://github.com/yerobalg/bcc-masterclass#readme",
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "sequelize": "^6.14.1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.2.0",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4"
+  }
+}
