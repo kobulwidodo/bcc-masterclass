@@ -107,6 +107,8 @@ You might be overwhelmed by these requirements. Don't worry, here's a list of so
 1. Golang (preferred)
 2. NodeJS
 
+You are welcome to use any libraries or frameworks, but we appreciate if you use the popular ones.
+
 ## :school_satchel: Tasks
 
 1. Fork this repository
