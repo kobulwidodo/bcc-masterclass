@@ -1,17 +1,17 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class users extends Model {
+  class Users extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ Roles }) {
+      this.belongsTo(Roles, { foreignKey: "role_id", as: "roles" });
     }
   }
-  users.init(
+  Users.init(
     {
       user_id: {
         type: DataTypes.STRING,
@@ -63,6 +63,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: "userProfile/default.png",
       },
+      role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "roles",
+          key: "id",
+        },
+        validate: {
+          notEmpty: { msg: "Role field is required" },
+          notNull: { msg: "Role field must exist" },
+        },
+      },
     },
     {
       sequelize,
@@ -70,5 +82,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "users",
     }
   );
-  return users;
+  return Users;
 };
