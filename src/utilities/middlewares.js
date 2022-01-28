@@ -3,6 +3,6 @@ module.exports = {
     console.error(err);
     res
       .status(err.statusCode || 500)
-      .json({ error: err.message || "Kesalahan Sistem" });
+      .json({ error: err.message || "Internal Server Error" });
   },
 };

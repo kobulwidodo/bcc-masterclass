@@ -1,8 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+
 const { sequelize } = require("./models");
-const userController = require("./repositories/UserRepository");
+const { authRouter } = require("./routes");
 const handler = require("./utilities/middlewares");
 
 const { PORT, SALT_ROUND } = require("./config");
@@ -11,8 +12,7 @@ const app = express();
 
 app.use(morgan('common'))
 app.use(express.json());
-
-app.post("/api/v1/", userController.addNewUser);
+app.use('/api/v1/auth', authRouter);
 
 app.use(handler.errorHandler);
 
