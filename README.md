@@ -15,18 +15,18 @@ This application is intended so that FILKOM students can learn and teach. To acc
 
 As we have mentioned earlier, we need technology that can support BCC Masterclass in the future. Please consider these features below:
 
-* A new user can register account to the system
+* A new user can register account to the system ✅ endpoint at /user/register
 * User can edit their account
-* User can see their account
-* User can buy a course
-* User can view the courses taken
+* User can see their account ✅ /user
+* User can buy a course ✅ /course/buycourse
+* User can view the courses taken ✅ /course/my
 * Admin can delete a user
 * Admin can delete an instructor
 * Admin can delete a course
-* A new instructor can register account to the system
-* Instructor can create new course
-* Instructor can edit their course
-* Instructor can delete their course
+* A new instructor can register account to the system ✅ /user/register with json body roles = 1
+* Instructor can create new course ✅ /course/addcourse // /course/:slug
+* Instructor can edit their course 🔜 /course/:slug with PATCH
+* Instructor can delete their course 🔜 /course/:slug with DELETE
 
 ## :earth_americas: Service Implementation
 

@@ -1,0 +1,30 @@
+{
+  "name": "bcc-masterclass",
+  "version": "1.0.0",
+  "description": "BCC Masterclass Course",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aenzt/bcc-masterclass.git"
+  },
+  "author": "aenzt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aenzt/bcc-masterclass/issues"
+  },
+  "homepage": "https://github.com/aenzt/bcc-masterclass#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8",
+    "slugify": "^1.6.5",
+    "validator": "^13.7.0"
+  }
+}
