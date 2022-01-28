@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 
 const { sequelize } = require("./models");
 const { authRouter } = require("./routes");
-const handler = require("./utilities/middlewares");
+const errMid = require("./middlewares/ErrorMiddleware");
 
 const { PORT } = require("./config");
 
@@ -18,10 +18,10 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-
 app.use("/api/v1/auth", authRouter);
 
-app.use(handler.errorHandler);
+app.use(errMid.errorHandler);
+app.use(errMid.notFound);
 
 app.listen(PORT, async () => {
   console.log(`Server is running at port ${PORT}`);
