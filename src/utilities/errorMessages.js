@@ -37,4 +37,18 @@ module.exports = {
       message: "Wrong password",
     };
   },
+
+  notLoggedIn() {
+    return {
+      statusCode: 403,
+      message: "You must be logged in to perform this action",
+    }
+  },
+
+  unauthorized() {
+    return {
+      statusCode: 401,
+      message: "You are not authorized to perform this action",
+    } 
+  }
 };

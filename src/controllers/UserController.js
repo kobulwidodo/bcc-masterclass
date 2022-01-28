@@ -41,7 +41,7 @@ module.exports = {
     try {
       const { user_id, role_id } = await UserRepository.getUser(payload);
 
-      const token = jwt.encodeToken({ user_id, role_id });
+      const token = jwt.encodeToken({ userId: user_id, roleId: role_id });
 
       return res
         .cookie("accessToken", token, {
