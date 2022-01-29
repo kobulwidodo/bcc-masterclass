@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const { sequelize } = require("./models");
-const { authRouter, courseRouter } = require("./routes");
+const router = require("./routes");
 const errMid = require("./middlewares/ErrorMiddleware");
 
 const { PORT } = require("./config");
@@ -18,8 +18,9 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/courses", courseRouter);
+app.use("/api/v1/auth", router.authRouter);
+app.use("/api/v1/courses", router.courseRouter);
+app.use("/api/v1/payment", router.paymentRouter);
 
 app.use(errMid.errorHandler);
 app.use(errMid.notFound);

@@ -5,6 +5,9 @@ module.exports = {
   login(actor) {
     return { message: `${actor} logged in successfully` };
   },
+  order() {
+    return { message: `Successfully ordered this course` };
+  },
   payment() {
     return { message: `successfully purchased the course` };
   },

@@ -1,7 +1,6 @@
 const { Courses, Users } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
-const { Op } = require("sequelize");
 
 module.exports = {
   async addNewCourse(payload) {
@@ -37,6 +36,13 @@ module.exports = {
       attributes: [],
     });
     if (!check || roleId == 2) throw errMsg.unauthorized();
+  },
+
+  async getIdByCourseId(courseId) {
+    return await Courses.findOne({
+      where: { course_id: courseId },
+      attributes: ["id"],
+    });
   },
 
   async deleteAllCourses() {

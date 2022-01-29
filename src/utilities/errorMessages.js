@@ -58,4 +58,11 @@ module.exports = {
       message: "You are not authorized to perform this action",
     };
   },
+
+  purchasingFreeCourse() {
+    return {
+      statusCode: 403,
+      message: "You cannot purchase a free course",
+    };
+  },
 };

@@ -6,6 +6,15 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Users, { foreignKey: "user_id", as: "users" });
       this.belongsTo(Courses, { foreignKey: "course_id", as: "courses" });
     }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        id: undefined,
+        course_id: undefined,
+        user_id: undefined,
+      };
+    }
   }
   CoursePayments.init(
     {
@@ -17,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+
         references: {
           model: "users",
           key: "id",
@@ -39,13 +49,13 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       payment_method: {
-        type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI"),
+        type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI", "FREE"),
         allowNull: false,
         validate: {
           notEmpty: { msg: "Payment method is required" },
           notNull: { msg: "Payment method must exist" },
           isIn: {
-            args: [["BCA", "BNI", "BRI", "MANDIRI"]],
+            args: [["BCA", "BNI", "BRI", "MANDIRI", "FREE"]],
             msg: "Payment method not available",
           },
         },
@@ -60,7 +70,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       purchase_date: {
         type: DataTypes.DATE,
-        allowNull: false,
       },
     },
     {

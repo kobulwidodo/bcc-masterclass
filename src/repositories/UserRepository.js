@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { Users, Roles } = require("../models");
+const { Users } = require("../models");
 const { SALT_ROUND } = require("../config");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");

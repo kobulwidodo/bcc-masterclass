@@ -30,7 +30,7 @@ module.exports = {
         },
       },
       payment_method: {
-        type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI"),
+        type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI", "FREE"),
         allowNull: false,
       },
       payment_code: {
@@ -43,7 +43,6 @@ module.exports = {
       },
       purchase_date: {
         type: DataTypes.DATE,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
