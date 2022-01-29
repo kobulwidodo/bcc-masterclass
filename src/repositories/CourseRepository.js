@@ -1,4 +1,4 @@
-const { Courses } = require("../models");
+const { Courses, Users } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
 
@@ -9,5 +9,15 @@ module.exports = {
     await Courses.create({ course_id: courseId, ...payload });
 
     return { courseId };
+  },
+
+  async getAllCourses() {
+    return await Courses.findAll({
+      include: {
+        model: Users,
+        as: "instructor",
+        attributes: ["user_id", "username", "name"],
+      },
+    });
   },
 };
