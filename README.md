@@ -24,9 +24,15 @@ As we have mentioned earlier, we need technology that can support BCC Masterclas
 * Admin can delete an instructor
 * Admin can delete a course
 * A new instructor can register account to the system ✅ /user/register with json body roles = 1
-* Instructor can create new course ✅ /course/addcourse // /course/:slug
-* Instructor can edit their course 🔜 /course/:slug with PATCH
-* Instructor can delete their course 🔜 /course/:slug with DELETE
+* Instructor can create new course ✅ /course/addcourse
+* Instructor can edit their course ✅ /course/:slug with PATCH
+* Instructor can delete their course ✅ /course/:slug with DELETE
+
+Todo
+* Handle error when course not found
+* Make middleware for instructor and admin
+* Make admin crud
+* Routes cleanup using /course/:slug
 
 ## :earth_americas: Service Implementation
 

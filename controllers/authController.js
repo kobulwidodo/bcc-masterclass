@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import Jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -55,7 +56,7 @@ export async function login(req, res) {
       } 
       catch (err) {
         const errors = handleErrors(err);
-        res.status(400).json({ err });
+        res.status(400).json({ error: err.message });
       }
 }
 
@@ -90,6 +91,7 @@ export async function view(req, res) {
 		email: user.email,
     fullName: user.fullName,
     balance: user.balance,
+    roles: user.roles
 	});
 }
 
@@ -102,5 +104,38 @@ export async function addbalance(req, res){
   return res.json({
     message: "Your Balance",
     balance: user.balance
+  });
+}
+
+export async function edit(req, res){
+  const user = await User.findOne({"_id": res.locals.user});
+  if(req.body.fullName){
+    user.fullName = req.body.fullName;
+  }
+  if(req.body.newPassword){
+    if(req.body.oldPassword){
+      const oldPassword = req.body.oldPassword;
+      const match = await bcrypt.compare(oldPassword, user.password);
+      if(match){
+        user.password = req.body.newPassword;
+      }else{
+        return res.json(401, {
+          message: "Old password is incorrect"
+        })
+      }
+
+    }else{
+      return res.json(409, {
+        message: "Old Password is required"
+      })
+    }
+  }
+  await user.save();
+  return res.json({
+    message: "Your Account",
+    email: user.email,
+    fullName: user.fullName,
+    balance: user.balance,
+    roles: user.roles
   });
 }

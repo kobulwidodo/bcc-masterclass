@@ -24,3 +24,15 @@ export function requireAuth(req, res, next){
         });
     };
 };
+
+export function requireRole(role){
+    return (req, res, next) => {
+        if(res.locals.user.roles == role){
+            next();
+        } else{
+            res.status(403).json({
+                error: 'Unauthorized, permission not enough'
+            });
+        };
+    };
+}
