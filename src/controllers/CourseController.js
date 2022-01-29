@@ -59,8 +59,9 @@ module.exports = {
   async updateCourse(req, res, next) {
     const { courseId } = req.params;
     try {
-      //Check if a user that logged in is an instructor of the course
-      await CourseRepository.isUserAnInstructor(req.userId, courseId);
+      //Cnly instructor of this course and admin can update the course
+      const { userId, roleId } = req;
+      await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
 
       await CourseRepository.updateCourse(courseId, req.body);
 
@@ -68,6 +69,20 @@ module.exports = {
     } catch (error) {
       if (error instanceof ValidationError)
         return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
+
+  async deleteCourse(req, res, next) {
+    const { courseId } = req.params;
+    const { userId, roleId } = req;
+    try {
+      await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
+
+      await CourseRepository.deleteCourse(courseId);
+
+      return res.status(201).send(successMsg.delete("course"));
+    } catch (error) {
       return next(error);
     }
   },
