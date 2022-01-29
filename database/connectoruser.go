@@ -139,3 +139,27 @@ func SeeHistory(name string) (string, bool) {
 	return out, true
 
 }
+
+type Read struct {
+	Name string `csv:"name"`
+}
+
+func SeeUser() string {
+	file, err := os.OpenFile("user.csv", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	out := ""
+	if err != nil {
+		out = err.Error()
+		return out
+	}
+	defer file.Close()
+	var ReadDatas []Read
+	if err = gocsv.Unmarshal(file, &ReadDatas); err != nil {
+		out = err.Error()
+		return out
+	}
+	for _, read := range ReadDatas {
+		out = out + read.Name + " "
+	}
+	return out
+
+}

@@ -7,6 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func SeeUser(c *gin.Context) {
+	data := database.SeeUser()
+	c.JSON(http.StatusAccepted, gin.H{
+		"status":  "success",
+		"message": data,
+	})
+}
+
 type User struct {
 	Name     string `json:"name" binding:"required"`
 	Password string `json:"password" binding:"required"`

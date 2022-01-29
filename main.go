@@ -11,6 +11,7 @@ import (
 func main() {
 	router := gin.Default()
 	router.GET("/", hello)
+	router.GET("/user", pengguna.SeeUser)
 	router.POST("/user/new", pengguna.AddUser)
 	router.POST("/user/edit", pengguna.EditUser)
 	router.POST("/user/buy", pengguna.Buy)
