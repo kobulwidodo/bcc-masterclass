@@ -1,4 +1,4 @@
-const UserRepository = require("../repositories/userRepository");
+const UserRepository = require("../repositories/UserRepository");
 const successMsg = require("../utilities/successMessages");
 const errMsg = require("../utilities/errorMessages");
 const jwt = require("../utilities/tokenizer");
@@ -9,11 +9,11 @@ const { ValidationError } = require("sequelize");
 const getRoleName = (roleId) => {
   switch (roleId) {
     case 1:
-      return "admin";
+      return "Admin";
     case 2:
-      return "user";
+      return "User";
     case 3:
-      return "instructor";
+      return "Instructor";
   }
 };
 

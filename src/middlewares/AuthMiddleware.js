@@ -1,5 +1,5 @@
 const errMsg = require("../utilities/errorMessages");
-const jwt = require("./tokenizer");
+const jwt = require("../utilities/tokenizer");
 const { JWT_SECRET } = require("../config");
 
 module.exports = {

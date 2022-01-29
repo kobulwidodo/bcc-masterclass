@@ -8,6 +8,9 @@ module.exports = {
   payment() {
     return { message: `successfully purchased the course` };
   },
+  create(table) {
+    return { message: `successfully created ${table}` };
+  },
   update(table) {
     return { message: `successfully edited ${table}` };
   },
