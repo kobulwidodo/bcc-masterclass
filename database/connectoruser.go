@@ -12,38 +12,42 @@ type UserData struct {
 	Password string `csv:"password"`
 }
 
-func CreateUser(name string, password string) bool {
+func CreateUser(name string, password string) (string, bool) {
 	var newUser UserData
 	newUser.Name = name
 	newUser.Password = password
+	out := ""
 	file, err := os.OpenFile("user.csv", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		fmt.Println("File tidak ditemukan")
-		return false
+		out = "File tidak ditemukan"
+		return out, false
 	}
 	defer file.Close()
 	var UserDatas []UserData
 	if err = gocsv.Unmarshal(file, &UserDatas); err != nil {
-		return false
+		out = "Failed Unmarshal"
+		return out, false
 	}
 	// cek sebelum menambahkan apakah user sudah ada
 	for _, user := range UserDatas {
 		if user.Name == newUser.Name {
-			fmt.Println("User sudah ada")
-			return false
+			out = "User sudah ada"
+			return out, false
 		}
 	}
 
 	if err := os.Truncate("user.csv", 0); err != nil {
-		return false
+		out = "Failed to truncate"
+		return out, false
 	}
 	UserDatas = append(UserDatas, newUser)
 
 	if err = gocsv.Marshal(&UserDatas, file); err != nil {
-		fmt.Println("Database error")
-		return false
+		out = "Database error"
+		return out, false
 	}
-	return true
+	out = newUser.Name + " berhasil dibuat"
+	return out, true
 }
 
 func EditUser(name string, password string, newpassword string) bool {

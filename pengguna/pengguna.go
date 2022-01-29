@@ -19,7 +19,7 @@ func AddUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	cek := database.CreateUser(user.Name, user.Password)
+	message, cek := database.CreateUser(user.Name, user.Password)
 	if !cek {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
@@ -30,6 +30,7 @@ func AddUser(c *gin.Context) {
 	c.JSON(http.StatusAccepted, gin.H{
 		"status":  "success",
 		"message": "pengguna berhasil ditambahkan",
+		"data":    message,
 	})
 }
 

@@ -83,6 +83,9 @@ func UpdateCourse(judul string, harga string, judulBaru string, hargaBaru string
 				CourseDatas[i].Judul = judulBaru
 			} else if harga != "" && judul == "" {
 				CourseDatas[i].Harga = hargaBaru
+			} else if harga != "" && judul != "" {
+				CourseDatas[i].Harga = hargaBaru
+				CourseDatas[i].Judul = judulBaru
 			}
 			break
 		}
