@@ -56,6 +56,22 @@ module.exports = {
     }
   },
 
+  async updateCourse(req, res, next) {
+    const { courseId } = req.params;
+    try {
+      //Check if a user that logged in is an instructor of the course
+      await CourseRepository.isUserAnInstructor(req.userId, courseId);
+
+      await CourseRepository.updateCourse(courseId, req.body);
+
+      return res.status(201).send(successMsg.update("course"));
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
+
   async getInstructorsCourses(req, res, next) {
     const { instructorId } = req.params;
     try {
