@@ -12,7 +12,6 @@ type databasecourse struct {
 }
 
 func CreateCourse(judul string, harga string) bool {
-	// bikin tempat data course
 	var newCourse databasecourse
 	newCourse.Judul = judul
 	newCourse.Harga = harga
@@ -21,7 +20,6 @@ func CreateCourse(judul string, harga string) bool {
 	if err != nil {
 		return false
 	}
-	// ingatkan tutup
 	defer file.Close()
 	var CourseDatas []databasecourse
 	if err = gocsv.Unmarshal(file, &CourseDatas); err != nil {
@@ -33,12 +31,10 @@ func CreateCourse(judul string, harga string) bool {
 			return false
 		}
 	}
-	// delete semua di csv
 	if err := os.Truncate("course.csv", 0); err != nil {
 		return false
 	}
 	CourseDatas = append(CourseDatas, newCourse)
-	// masukkan kembali
 	if err = gocsv.Marshal(&CourseDatas, file); err != nil {
 		return false
 	}

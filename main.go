@@ -16,6 +16,7 @@ func main() {
 	router.POST("/user/buy", pengguna.Buy)
 	router.POST("/user/buy/history", pengguna.BuyHistory)
 	router.POST("/instructor/addcourse", instructor.AddCourse)
+	router.POST("/instructor/new", instructor.NewInstructor)
 	router.POST("/instructor/delcourse", instructor.DeleteCourse)
 	router.POST("/instructor/updatecourse", instructor.UpdateCourse)
 	router.POST("/admin/deleteuser", admin.DeleteUser)
