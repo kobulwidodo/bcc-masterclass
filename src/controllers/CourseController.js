@@ -45,6 +45,17 @@ module.exports = {
     }
   },
 
+  async getCourseByCourseId(req, res, next) {
+    const { courseId } = req.params;
+    try {
+      return res
+        .status(201)
+        .send(await CourseRepository.getCourseByCourseId(courseId));
+    } catch (error) {
+      return next(error);
+    }
+  },
+
   async getInstructorsCourses(req, res, next) {
     const { instructorId } = req.params;
     try {

@@ -17,6 +17,11 @@ module.exports = courseRouter
     CourseController.deleteAllCourses
   )
   .get(
+    "/:courseId",
+    authMid.authorizeLogin,
+    CourseController.getCourseByCourseId
+  )
+  .get(
     "/:instructorId",
     authMid.authorizeLogin,
     CourseController.getInstructorsCourses

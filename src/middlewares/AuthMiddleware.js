@@ -1,4 +1,3 @@
-const { getIdByUserId } = require("../repositories/UserRepository");
 const errMsg = require("../utilities/errorMessages");
 const jwt = require("../utilities/tokenizer");
 const { JWT_SECRET } = require("../config");
@@ -31,14 +30,5 @@ module.exports = {
         return next(error);
       }
     };
-  },
-
-  async authorizeUser(req, res, next) {
-    try {
-      if (!(await getIdByUserId(req.userId))) throw errMsg.unauthorized(); 
-      return next();
-    } catch (error) {
-      return next(error);
-    }
   },
 };

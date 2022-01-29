@@ -25,6 +25,10 @@ module.exports = {
     await Courses.destroy({ where: {} });
   },
 
+  async getCourseByCourseId(courseId) {
+    return await Courses.findOne({where: {course_id: courseId}});
+  },
+
   async getInstructorsCourses(instructorId) {
     return await Courses.findAll({ where: { instructor_id: instructorId } });
   },
