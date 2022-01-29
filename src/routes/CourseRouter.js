@@ -5,13 +5,19 @@ const authMid = require("../middlewares/AuthMiddleware");
 module.exports = courseRouter
   .post(
     "/",
-    authMid.authorizeUser,
+    authMid.authorizeLogin,
     authMid.authorizeRole([3]),
     CourseController.addNewCourse
   )
-  .get(
+  .get("/", authMid.authorizeLogin, CourseController.getAllCourses)
+  .delete(
     "/",
-    authMid.authorizeUser,
-    authMid.authorizeRole([3]),
-    CourseController.getAllCourses
+    authMid.authorizeLogin,
+    authMid.authorizeRole([1]),
+    CourseController.deleteAllCourses
+  )
+  .get(
+    "/:instructorId",
+    authMid.authorizeLogin,
+    CourseController.getInstructorsCourses
   );

@@ -20,4 +20,12 @@ module.exports = {
       },
     });
   },
+
+  async deleteAllCourses() {
+    await Courses.destroy({ where: {} });
+  },
+
+  async getInstructorsCourses(instructorId) {
+    return await Courses.findAll({ where: { instructor_id: instructorId } });
+  },
 };

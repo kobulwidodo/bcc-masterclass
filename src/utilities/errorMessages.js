@@ -21,7 +21,7 @@ module.exports = {
     return {
       statusCode: 400,
       message: `${field} must be filled`,
-    }
+    };
   },
 
   userNotFoundError() {
@@ -42,13 +42,20 @@ module.exports = {
     return {
       statusCode: 403,
       message: "You must be logged in to perform this action",
-    }
+    };
+  },
+
+  wrongAccessToken() {
+    return {
+      statusCode: 403,
+      message: "Wrong access token",
+    };
   },
 
   unauthorized() {
     return {
       statusCode: 401,
       message: "You are not authorized to perform this action",
-    } 
-  }
+    };
+  },
 };

@@ -1,17 +1,23 @@
+const { getIdByUserId } = require("../repositories/UserRepository");
 const errMsg = require("../utilities/errorMessages");
 const jwt = require("../utilities/tokenizer");
 const { JWT_SECRET } = require("../config");
 
 module.exports = {
-  authorizeUser(req, res, next) {
+  authorizeLogin(req, res, next) {
     const token = req.cookies.accessToken;
     try {
       if (!token) throw errMsg.notLoggedIn();
-      const { userId, roleId } = jwt.decodeToken(token, JWT_SECRET);
+
+      const decoded = jwt.decodeToken(token);
+      if (!decoded) throw errMsg.wrongAccessToken();
+
+      const { userId, roleId } = decoded;
       [req.userId, req.roleId] = [userId, roleId];
+
       return next();
-    } catch (err) {
-      return next(err);
+    } catch (error) {
+      return next(error);
     }
   },
 
@@ -21,9 +27,18 @@ module.exports = {
         if (!allowedRoles.includes(parseInt(req.roleId)))
           throw errMsg.unauthorized();
         return next();
-      } catch (err) {
-        return next(err);
+      } catch (error) {
+        return next(error);
       }
     };
-  }
+  },
+
+  async authorizeUser(req, res, next) {
+    try {
+      if (!(await getIdByUserId(req.userId))) throw errMsg.unauthorized(); 
+      return next();
+    } catch (error) {
+      return next(error);
+    }
+  },
 };

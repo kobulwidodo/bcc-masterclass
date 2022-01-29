@@ -30,7 +30,30 @@ module.exports = {
 
   async getAllCourses(req, res, next) {
     try {
-      return res.send(await CourseRepository.getAllCourses());
+      return res.status(201).send(await CourseRepository.getAllCourses());
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async deleteAllCourses(req, res, next) {
+    try {
+      await CourseRepository.deleteAllCourses();
+      return res.status(201).send(successMsg.delete("all courses"));
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async getInstructorsCourses(req, res, next) {
+    const { instructorId } = req.params;
+    try {
+      const { id: instructor_id } = await UserRepository.getIdByUserId(
+        instructorId
+      );
+      return res
+        .status(201)
+        .send(await CourseRepository.getInstructorsCourses(instructor_id));
     } catch (error) {
       return next(error);
     }
