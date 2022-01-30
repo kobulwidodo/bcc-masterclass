@@ -58,6 +58,27 @@ module.exports = {
       message: "You are not authorized to perform this action",
     };
   },
+  
+  notFound(field) {
+    return {
+      statusCode: 404,
+      message: `${field} not found`,
+    }
+  },
+
+  alreadyPurchased() {
+    return {
+      statusCode: 401,
+      message: "You already purchased this course",
+    }
+  },
+
+  paymentRequired() {
+    return {
+      statusCode: 401,
+      message: "You must pay to access this course",
+    }
+  },
 
   purchasingFreeCourse() {
     return {

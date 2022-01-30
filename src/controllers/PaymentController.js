@@ -20,10 +20,24 @@ module.exports = {
         price,
       } = await CourseRepository.getCourseByCourseId(courseId);
 
-      if (price == 0.00 && payment_method !== "FREE") 
+      if (price == 0.0 && payment_method !== "FREE")
         throw errMsg.purchasingFreeCourse();
+      else if (price > 0.0 && payment_method === "FREE")
+        throw errMsg.paymentRequired();
 
-      const total_price = payment_method === "FREE" ? 0.0 : price + 2500.0;
+      let total_price = price + 2500.0;
+      let message = successMsg.order();
+
+      if (payment_method === "FREE") {
+        total_price = 0.0;
+        message = successMsg.payment();
+        const isPurchased = await PaymentRepository.getPurchasedOrder(
+          courseSecretId,
+          userId
+        );
+
+        if (isPurchased) throw errMsg.alreadyPurchased();
+      }
 
       const payload = {
         user_id: userSecretId,
@@ -36,9 +50,6 @@ module.exports = {
 
       const invoice = await PaymentRepository.orderCourse(payload);
 
-      const message =
-        payment_method === "FREE" ? successMsg.payment() : successMsg.order();
-
       res.status(201).send({
         ...message,
         course_name: courseName,
@@ -49,6 +60,50 @@ module.exports = {
     } catch (error) {
       if (error instanceof ValidationError)
         return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
+
+  async purchaseCourse(req, res, next) {
+    const { userId } = req;
+    const { paymentId } = req.params;
+
+    console.log("tes");
+
+    try {
+      const order = await PaymentRepository.getPaymentById(paymentId);
+
+      const { course_id: courseId, users, courses } = order;
+
+      if (users.user_id != userId) throw errMsg.unauthorized();
+
+      const isPurchased = await PaymentRepository.getPurchasedOrder(
+        courseId,
+        userId
+      );
+      if (isPurchased) throw errMsg.alreadyPurchased();
+
+      const purchaseDate = await PaymentRepository.purchaseOrder(paymentId);
+
+      res.status(200).send({
+        ...successMsg.payment(),
+        course_name: courses.course_name,
+        course_id: courseId,
+        user_id: userId,
+        invoice: {
+          ...order.dataValues,
+          purchase_date: purchaseDate,
+          id: undefined,
+          user_id: undefined,
+          course_id: undefined,
+          users: undefined,
+          courses: undefined,
+          createdAt: undefined,
+          updatedAt: undefined,
+          orderedAt: order.dataValues.createdAt,
+        },
+      });
+    } catch (error) {
       return next(error);
     }
   },

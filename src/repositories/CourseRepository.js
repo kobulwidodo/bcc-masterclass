@@ -39,10 +39,13 @@ module.exports = {
   },
 
   async getIdByCourseId(courseId) {
-    return await Courses.findOne({
+    const course = await Courses.findOne({
       where: { course_id: courseId },
       attributes: ["id"],
     });
+
+    if (!course) throw errMsg.notFound("Course");
+    return course;
   },
 
   async deleteAllCourses() {
@@ -50,7 +53,10 @@ module.exports = {
   },
 
   async getCourseByCourseId(courseId) {
-    return await Courses.findOne({ where: { course_id: courseId } });
+    const course = await Courses.findOne({ where: { course_id: courseId } });
+
+    if (!course) throw errMsg.notFound("Course");
+    return course;
   },
 
   async updateCourse(courseId, payload) {
