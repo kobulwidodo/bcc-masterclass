@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Courses, { foreignKey: "course_id", as: "courses" });
     }
     toJSON() {
-      return { ...this.get(), id: undefined };
+      return { ...this.get(), id: undefined, course_id: undefined }; 
     }
   }
   CourseTopics.init(
@@ -23,7 +23,16 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: { msg: "Name field is required" },
           notNull: { msg: "Name field must exist" },
-        }
+        },
+      },
+      course_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "courses",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        allowNull: false,
       },
     },
     {

@@ -20,7 +20,7 @@ module.exports = {
 
       const topic = await CourseTopicRepository.addNewTopic({
         name,
-        courseSecretId,
+        course_id: courseSecretId,
       });
 
       return res
@@ -33,29 +33,26 @@ module.exports = {
     }
   },
 
-  // async getCourseTopics(req, res, next) {
-  //   const { courseId } = req.params;
-  //   const { userId, roleId } = req;
+  async getCourseTopics(req, res, next) {
+    const { courseId } = req.params;
+    const { userId, roleId } = req;
 
-  //   try {
-  //     const { id: courseSecretId } = await CourseRepository.isUserAnInstructor(
-  //       userId,
-  //       courseId,
-  //       roleId
-  //     );
+    try {
+      const { id: courseSecretId } = await CourseRepository.isUserAnInstructor(
+        userId,
+        courseId,
+        roleId
+      );
 
-  //     const topic = await CourseTopicRepository.getCourseTopics({
-  //       title,
-  //       courseSecretId,
-  //     });
+      const topic = await CourseTopicRepository.getCourseTopics(courseSecretId);
 
-  //     return res.status(201).send(topic);
-  //   } catch (error) {
-  //     if (error instanceof ValidationError)
-  //       return next(errMsg.validationError(error));
-  //     return next(error);
-  //   }
-  // },
+      return res.status(201).send(topic);
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
 
   // async updateCourseTopic(req, res, next) {
   //   const { courseId } = req.params;

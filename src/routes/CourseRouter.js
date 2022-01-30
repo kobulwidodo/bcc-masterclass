@@ -35,4 +35,8 @@ module.exports = courseRouter
     authMid.authorizeRole([3]),
     CourseTopicController.addNewTopic
   )
-  // .get("/:courseId/topics", authMid.authorizeLogin, CourseTopicController.getCourseTopics);
+  .get(
+    "/:courseId/topics",
+    authMid.authorizeLogin,
+    CourseTopicController.getCourseTopics
+  );
