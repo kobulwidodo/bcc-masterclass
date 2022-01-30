@@ -45,7 +45,7 @@ export async function buyCourse(req, res){
 			res.status(402).json({"Error": "Insufficient Balance"});
 		}
 	} catch (error) {
-		console.log(error);
+		return res.status(404).json({"Message": "Course not found"});
 	}
 }
 
@@ -66,29 +66,30 @@ export async function viewCourse(req, res){
 }
 
 export async function editCourse(req, res){
-	let message ={};
 	const courseSlug = req.params.slug;
-	const course = await Course.findOne({ "courseSlug": courseSlug});
 
-	if (req.body.courseName) {
-		course.courseName = req.body.courseName;
-		await course.save();
-		message = message + { "Course Name": "Updated"};
-	};
-	if (req.body.courseDescription){
-		course.courseDescription = req.body.courseDescription;
-		await course.save();
-		message = message + { "Course Description": "Updated"};
+	try {
+		const course = await Course.findOne({ "courseSlug": courseSlug});
+		if (req.body.courseName) {
+			course.courseName = req.body.courseName;
+			await course.save();
+		};
+		if (req.body.courseDescription){
+			course.courseDescription = req.body.courseDescription;
+			await course.save();
+		}
+		if (req.body.coursePrice){
+			course.coursePrice = req.body.coursePrice;
+			await course.save();
+		}
+		return res.status(200).json({
+			message: "Course Updated",
+			course: course
+		});
+	} catch (error) {
+		return res.status(404).json({"Message": "Course not found"});
 	}
-	if (req.body.coursePrice){
-		course.coursePrice = req.body.coursePrice;
-		await course.save();
-		message = message + { "Course Price": "Updated"};
-	}
-	return res.status(200).json({
-		message: "Course Updated",
-		course: course
-	});
+
 }
 
 export async function deleteCourse(req, res){

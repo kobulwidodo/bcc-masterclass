@@ -13,4 +13,5 @@ router.post('/addbalance', requireAuth, addbalance);
 router.get('/', requireAuth, view); //the endpoint gonna be localhost/user/
 router.patch('/', requireAuth, edit);
 
+
 export default router;

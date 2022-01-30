@@ -36,11 +36,6 @@ const userSchema = new mongoose.Schema({
     }],
 });
 
-userSchema.pre("save", async function (next) {
-    this.password = await bcrypt.hash(this.password, 69);
-    next();
-});
-
 userSchema.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {

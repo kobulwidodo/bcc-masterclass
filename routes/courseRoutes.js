@@ -6,13 +6,13 @@ const router = Router();
 
 
 //user
-router.get('/', viewAllCourse)
-router.get('/my', requireAuth, viewUserCourse) //must implement middleware to check for jwt
-router.post('/buycourse', requireAuth, buyCourse);
+router.get('/', viewAllCourse) //see all courses
+router.get('/my', requireAuth, viewUserCourse) //see user owned courses
+router.post('/buycourse', requireAuth, buyCourse); //buy course
 
 //instructor only
+router.get('/:slug', viewCourse); //See Course Details
 router.post('/addcourse', requireAuth, requireRole(1), addCourse);
-router.get('/:slug', viewCourse);
 router.patch('/:slug', requireAuth, requireRole(1), editCourse);
 router.delete('/:slug', requireAuth, requireRole(1), deleteCourse);
 
