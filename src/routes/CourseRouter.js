@@ -39,4 +39,9 @@ module.exports = courseRouter
     "/:courseId/topics",
     authMid.authorizeLogin,
     CourseTopicController.getCourseTopics
+  ).delete(
+    "/:courseId/topics",
+    authMid.authorizeLogin,
+    authMid.authorizeRole([3]),
+    CourseTopicController.deleteAllCourseTopics
   );

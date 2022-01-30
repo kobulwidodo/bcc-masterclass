@@ -22,8 +22,8 @@ module.exports = {
     await CourseTopics.update({ title }, { where: { topic_id: topicId } });
   },
 
-  async deleteAllCourseTopics(courseId) {
-    await CourseTopics.destroy({ where: { course_id: courseId } });
+  async deleteAllCourseTopics(courseSecretId) {
+    await CourseTopics.destroy({ where: { course_id: courseSecretId } });
   },
 
   async deleteCourseTopic(topicId) {

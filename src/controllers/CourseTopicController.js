@@ -54,27 +54,48 @@ module.exports = {
     }
   },
 
-  // async updateCourseTopic(req, res, next) {
-  //   const { courseId } = req.params;
-  //   const { userId, roleId } = req;
+  async deleteAllCourseTopics(req, res, next) {
+    const { courseId } = req.params;
+    const { userId, roleId } = req;
 
-  //   try {
-  //     const { id: courseSecretId } = await CourseRepository.isUserAnInstructor(
-  //       userId,
-  //       courseId,
-  //       roleId
-  //     );
+    try {
+      const { id: courseSecretId } = await CourseRepository.isUserAnInstructor(
+        userId,
+        courseId,
+        roleId
+      );
 
-  //     await CourseTopicRepository.updateCourseTopic({
-  //       title,
-  //       courseSecretId,
-  //     });
+      await CourseTopicRepository.deleteAllCourseTopics(courseSecretId);
 
-  //     return res.status(201).send(topic);
-  //   } catch (error) {
-  //     if (error instanceof ValidationError)
-  //       return next(errMsg.validationError(error));
-  //     return next(error);
-  //   }
-  // },
+      return res.status(200).send(successMsg.delete("course's topics"));
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
+
+  async updateCourseTopic(req, res, next) {
+    const { courseId } = req.params;
+    const { userId, roleId } = req;
+
+    try {
+      const { id: courseSecretId } = await CourseRepository.isUserAnInstructor(
+        userId,
+        courseId,
+        roleId
+      );
+
+      await CourseTopicRepository.updateCourseTopic({
+        title,
+        course_id: courseSecretId,
+      });
+
+      return res.status(201).send(topic);
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return next(errMsg.validationError(error));
+      return next(error);
+    }
+  },
 };
