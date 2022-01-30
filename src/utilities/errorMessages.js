@@ -68,14 +68,14 @@ module.exports = {
 
   alreadyPurchased() {
     return {
-      statusCode: 401,
+      statusCode: 403,
       message: "You already purchased this course",
     }
   },
 
   paymentRequired() {
     return {
-      statusCode: 401,
+      statusCode: 403,
       message: "You must pay to access this course",
     }
   },

@@ -20,6 +20,7 @@ module.exports = {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       course_id: {
         type: DataTypes.INTEGER,
@@ -28,6 +29,7 @@ module.exports = {
           model: "courses",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       payment_method: {
         type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI", "FREE"),

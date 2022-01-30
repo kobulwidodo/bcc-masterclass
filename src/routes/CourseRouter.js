@@ -1,5 +1,6 @@
 const courseRouter = require("express").Router();
 const CourseController = require("../controllers/CourseController");
+const CourseTopicController = require("../controllers/CourseTopicController");
 const authMid = require("../middlewares/AuthMiddleware");
 
 module.exports = courseRouter
@@ -27,4 +28,11 @@ module.exports = courseRouter
     "/:instructorId",
     authMid.authorizeLogin,
     CourseController.getInstructorsCourses
-  );
+  )
+  .post(
+    "/:courseId/topics",
+    authMid.authorizeLogin,
+    authMid.authorizeRole([3]),
+    CourseTopicController.addNewTopic
+  )
+  // .get("/:courseId/topics", authMid.authorizeLogin, CourseTopicController.getCourseTopics);

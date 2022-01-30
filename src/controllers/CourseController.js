@@ -1,5 +1,6 @@
 const CourseRepository = require("../repositories/CourseRepository");
 const UserRepository = require("../repositories/UserRepository");
+const PaymentRepository = require("../repositories/PaymentRepository");
 const successMsg = require("../utilities/successMessages");
 const errMsg = require("../utilities/errorMessages");
 
@@ -30,7 +31,7 @@ module.exports = {
 
   async getAllCourses(req, res, next) {
     try {
-      return res.status(201).send(await CourseRepository.getAllCourses());
+      return res.status(200).send(await CourseRepository.getAllCourses());
     } catch (error) {
       return next(error);
     }
@@ -39,7 +40,7 @@ module.exports = {
   async deleteAllCourses(req, res, next) {
     try {
       await CourseRepository.deleteAllCourses();
-      return res.status(201).send(successMsg.delete("all courses"));
+      return res.status(200).send(successMsg.delete("all courses"));
     } catch (error) {
       return next(error);
     }
@@ -49,7 +50,7 @@ module.exports = {
     const { courseId } = req.params;
     try {
       return res
-        .status(201)
+        .status(200)
         .send(await CourseRepository.getCourseByCourseId(courseId));
     } catch (error) {
       return next(error);
@@ -65,7 +66,7 @@ module.exports = {
 
       await CourseRepository.updateCourse(courseId, req.body);
 
-      return res.status(201).send(successMsg.update("course"));
+      return res.status(200).send(successMsg.update("course"));
     } catch (error) {
       if (error instanceof ValidationError)
         return next(errMsg.validationError(error));
@@ -77,11 +78,15 @@ module.exports = {
     const { courseId } = req.params;
     const { userId, roleId } = req;
     try {
-      await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
+      const check = await CourseRepository.isUserAnInstructor(
+        userId,
+        courseId,
+        roleId
+      );
 
       await CourseRepository.deleteCourse(courseId);
 
-      return res.status(201).send(successMsg.delete("course"));
+      return res.status(200).send(successMsg.delete("course"));
     } catch (error) {
       return next(error);
     }
@@ -94,7 +99,7 @@ module.exports = {
         instructorId
       );
       return res
-        .status(201)
+        .status(200)
         .send(await CourseRepository.getInstructorsCourses(instructor_id));
     } catch (error) {
       return next(error);

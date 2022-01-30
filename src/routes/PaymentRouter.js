@@ -9,7 +9,7 @@ module.exports = paymentRouter
     authMid.authorizeRole([2]),
     PaymentController.createOrder
   )
-  .get(
+  .put(
     "/:paymentId",
     authMid.authorizeLogin,
     PaymentController.purchaseCourse

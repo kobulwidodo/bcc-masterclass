@@ -2,13 +2,10 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Courses extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate({ Users }) {
+    static associate({ Users, CoursePayments, CourseTopics }) {
       this.belongsTo(Users, { foreignKey: "instructor_id", as: "instructor" });
+      this.hasMany(CoursePayments, { foreignKey: "course_id", as: "coursePayments" });
+      this.hasMany(CourseTopics, { foreignKey: "course_id", as: "courseTopics" });
     }
 
     toJSON() {
@@ -48,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: { msg: "Course image is required" },
           notNull: { msg: "Course image must exist" },
-        }
+        },
       },
       preview_video: {
         type: DataTypes.STRING,
@@ -56,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: { msg: "Preview video is required" },
           notNull: { msg: "Preview video must exist" },
-        }
+        },
       },
       instructor_id: {
         type: DataTypes.INTEGER,
@@ -65,10 +62,11 @@ module.exports = (sequelize, DataTypes) => {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE",
         validate: {
           notEmpty: { msg: "Instructor ID is required" },
           notNull: { msg: "Instructor ID must exist" },
-        }
+        },
       },
     },
     {

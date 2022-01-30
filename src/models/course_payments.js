@@ -8,10 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return {
-        ...this.get(),
-        id: undefined,
-      };
+      return { ...this.get(), id: undefined };
     }
   }
   CoursePayments.init(
@@ -24,15 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-
         references: {
           model: "users",
           key: "id",
         },
-        validate: {
-          notEmpty: { msg: "User id is required" },
-          notNull: { msg: "User id must exist" },
-        },
+        onDelete: "CASCADE",
       },
       course_id: {
         type: DataTypes.INTEGER,
@@ -41,10 +34,7 @@ module.exports = (sequelize, DataTypes) => {
           model: "courses",
           key: "id",
         },
-        validate: {
-          notEmpty: { msg: "Course id is required" },
-          notNull: { msg: "Course id must exist" },
-        },
+        onDelete: "CASCADE",
       },
       payment_method: {
         type: DataTypes.ENUM("BCA", "BNI", "BRI", "MANDIRI", "FREE"),

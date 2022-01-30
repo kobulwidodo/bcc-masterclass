@@ -42,7 +42,7 @@ module.exports = {
       ],
     });
 
-    if (!payment) throw errMsg.notFound("Payment");
+    if (!payment) throw errMsg.notFound("Order");
     return payment;
   },
 

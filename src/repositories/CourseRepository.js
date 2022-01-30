@@ -1,4 +1,4 @@
-const { Courses, Users } = require("../models");
+const { Courses, Users, CourseTopics } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
 
@@ -33,9 +33,10 @@ module.exports = {
         attributes: ["id"],
         where: { user_id: userId },
       },
-      attributes: [],
+      attributes: ["id"],
     });
     if (!check || roleId == 2) throw errMsg.unauthorized();
+    return check;
   },
 
   async getIdByCourseId(courseId) {
