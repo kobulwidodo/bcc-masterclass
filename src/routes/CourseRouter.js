@@ -39,9 +39,25 @@ module.exports = courseRouter
     "/:courseId/topics",
     authMid.authorizeLogin,
     CourseTopicController.getCourseTopics
-  ).delete(
+  )
+  .delete(
     "/:courseId/topics",
     authMid.authorizeLogin,
     authMid.authorizeRole([3]),
     CourseTopicController.deleteAllCourseTopics
+  )
+  .get(
+    "/:courseId/topics/:topicId",
+    authMid.authorizeLogin,
+    CourseTopicController.getTopicById
+  )
+  .put(
+    "/:courseId/topics/:topicId",
+    authMid.authorizeLogin,
+    CourseTopicController.updateCourseTopic
+  )
+  .delete(
+    "/:courseId/topics/:topicId",
+    authMid.authorizeLogin,
+    CourseTopicController.deleteTopicById
   );

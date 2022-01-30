@@ -18,8 +18,8 @@ module.exports = {
     });
   },
 
-  async updateCourseTopic(topicId, title) {
-    await CourseTopics.update({ title }, { where: { topic_id: topicId } });
+  async updateCourseTopic(topicId, name) {
+    await CourseTopics.update({ name }, { where: { topic_id: topicId } });
   },
 
   async deleteAllCourseTopics(courseSecretId) {
@@ -28,5 +28,12 @@ module.exports = {
 
   async deleteCourseTopic(topicId) {
     await CourseTopics.destroy({ where: { topic_id: topicId } });
+  },
+
+  async getCourseTopic(topicId) {
+    const topic = await CourseTopics.findOne({ where: { topic_id: topicId } });
+
+    if (!topic) throw errMsg.notFound("Topic");
+    return topic;
   },
 };
