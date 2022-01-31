@@ -20,16 +20,16 @@ As we have mentioned earlier, we need technology that can support BCC Masterclas
 * User can see their account ✅ /user
 * User can buy a course ✅ /course/buycourse
 * User can view the courses taken ✅ /course/my
-* Admin can delete a user
-* Admin can delete an instructor
-* Admin can delete a course
+* Admin can delete a user ✅
+* Admin can delete an instructor ✅
+* Admin can delete a course ✅
 * A new instructor can register account to the system ✅ /user/register with json body roles = 1
 * Instructor can create new course ✅ /course/addcourse
 * Instructor can edit their course ✅ /course/:slug with PATCH
 * Instructor can delete their course ✅ /course/:slug with DELETE
 
 Todo
-* Make admin crud
+* Handle error when duplicate email
 
 ## :earth_americas: Service Implementation
 

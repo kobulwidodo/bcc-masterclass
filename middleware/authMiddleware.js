@@ -9,7 +9,7 @@ export function requireAuth(req, res, next){
             if(err){
                 res.locals.user = null;
                 res.status(403).json({
-                    error: 'Unauthorized, must be logged in to view courses'
+                    error: 'Unauthorized, must be logged to do this operation'
                 });
             } else{
                 let user = await User.findById(payload.id);
@@ -20,14 +20,14 @@ export function requireAuth(req, res, next){
     } else{
         res.locals.user = null;
         res.status(403).json({
-            error: 'Unauthorized, must be logged in to view courses'
+            error: 'Unauthorized, must be logged in to do this operation'
         });
     };
 };
 
 export function requireRole(role){
     return (req, res, next) => {
-        if(res.locals.user.roles == role){
+        if(res.locals.user.roles >= role){
             next();
         } else{
             res.status(403).json({

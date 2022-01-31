@@ -94,14 +94,37 @@ export async function editCourse(req, res){
 
 export async function deleteCourse(req, res){
 	const courseSlug = req.params.slug;
+	const user = res.locals.user;
 	try {
 		const course = await Course.findOne({ "courseSlug": courseSlug});
-		await course.remove();
+		if(user._id === course.courseAuthor){
+			await course.deleteOne();
+			return res.status(200).json({
+				message: "Course Deleted",
+				course: course
+			});
+		}else{
+			return res.status(402).json({
+				message: "The course is not yours"
+			})
+		}
+	} catch(e){
+		return res.status(403).json({
+			message: "Error in deleting course",
+			error: e.message
+		})
+	}
+}
+
+export async function adminDeleteCourse(req, res){
+	const courseSlug = req.params.slug;
+	try {
+		const course = await Course.findOne({"courseSlug": courseSlug});
+		await course.deleteOne();
 		return res.status(200).json({
 			message: "Course Deleted",
-			course: course
-		});
-	} catch(e){
+		})
+	} catch (error) {
 		return res.status(403).json({
 			message: "Error in deleting course",
 			error: e.message

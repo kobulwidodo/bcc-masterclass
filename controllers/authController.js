@@ -70,7 +70,7 @@ export async function register(req, res) {
     const user = await User.create({ email, password, fullName, roles });
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id, fullName: user.fullName });
+    res.status(201).json({ userId: user._id, fullName: user.fullName, email: user.email, roles: user.roles });
   } catch (err) {
     console.log(err);
     res.status(400).json({ err });
@@ -139,5 +139,14 @@ export async function edit(req, res) {
     fullName: user.fullName,
     balance: user.balance,
     roles: user.roles,
+  });
+}
+
+export async function deleteuser(req, res) {
+  const email = req.body.email;
+  const user = await User.findOne({ email: email });
+  await user.deleteOne();
+  return res.status(200).json({
+    message: "User Deleted",
   });
 }
