@@ -26,7 +26,7 @@ module.exports = {
 
       return res
         .status(201)
-        .send({ ...successMsg.create("course's topic"), courseId, material });
+        .send({ ...successMsg.create("topic's material"), courseId, material });
     } catch (error) {
       if (error instanceof ValidationError)
         return next(errMsg.validationError(error));
@@ -113,9 +113,9 @@ module.exports = {
     try {
       await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
 
-      await CourseTopicRepository.updateCourseTopic(topicId, name);
+      await CourseMaterialRepository.updateTopicMaterial(materialId, req.body);
 
-      return res.status(200).send(successMsg.update("course's topic"));
+      return res.status(200).send(successMsg.update("topic's material"));
     } catch (error) {
       if (error instanceof ValidationError)
         return next(errMsg.validationError(error));
@@ -123,16 +123,16 @@ module.exports = {
     }
   },
 
-  async deleteTopicById(req, res, next) {
-    const { courseId, topicId } = req.params;
+  async deleteMaterialById(req, res, next) {
+    const { courseId, materialId } = req.params;
     const { userId, roleId } = req;
 
     try {
       await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
 
-      await CourseTopicRepository.deleteCourseTopic(topicId);
+      await CourseMaterialRepository.deleteCourseMaterial(materialId);
 
-      return res.status(200).send(successMsg.delete("course's topic"));
+      return res.status(200).send(successMsg.delete("topic's material"));
     } catch (error) {
       return next(error);
     }

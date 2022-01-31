@@ -81,4 +81,14 @@ module.exports = courseRouter
     "/:courseId/topics/:topicId/materials/:materialId",
     authMid.authorizeLogin,
     CourseMaterialController.getMaterialById
+  )
+  .put(
+    "/:courseId/topics/:topicId/materials/:materialId",
+    authMid.authorizeLogin,
+    CourseMaterialController.updateTopicMaterial
+  )
+  .delete(
+    "/:courseId/topics/:topicId/materials/:materialId",
+    authMid.authorizeLogin,
+    CourseMaterialController.deleteMaterialById
   );
