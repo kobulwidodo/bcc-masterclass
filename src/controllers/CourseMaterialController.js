@@ -43,10 +43,15 @@ module.exports = {
         courseId
       );
 
-      const isPurchased = await PaymentRepository.getPurchasedOrder(courseSecretId, userId);
-        
-      const { id: topicSecretId } = await CourseTopicRepository.getCourseTopic(topicId);
-      
+      const isPurchased = await PaymentRepository.getPurchasedOrder(
+        courseSecretId,
+        userId
+      );
+
+      const { id: topicSecretId } = await CourseTopicRepository.getCourseTopic(
+        topicId
+      );
+
       const topics = await CourseMaterialRepository.getTopicMaterials(
         topicSecretId,
         isPurchased || roleId == 3
@@ -65,7 +70,11 @@ module.exports = {
     try {
       await CourseRepository.isUserAnInstructor(userId, courseId, roleId);
 
-      await CourseTopicRepository.deleteAllTopicMaterials(topicId);
+      const { id: topicSecretId } = await CourseTopicRepository.getCourseTopic(
+        topicId
+      );
+
+      await CourseMaterialRepository.deleteAllTopicMaterials(topicSecretId);
 
       return res.status(200).send(successMsg.delete("all topic's material"));
     } catch (error) {
@@ -73,21 +82,33 @@ module.exports = {
     }
   },
 
-  async getTopicById(req, res, next) {
-    const { topicId } = req.params;
+  async getMaterialById(req, res, next) {
+    const { courseId, materialId } = req.params;
+    const { userId, roleId } = req;
 
     try {
-      const topic = await CourseTopicRepository.getCourseTopic(topicId);
+      const { id: courseSecretId } = await CourseRepository.getCourseByCourseId(
+        courseId
+      );
+
+      const isPurchased = await PaymentRepository.getPurchasedOrder(
+        courseSecretId,
+        userId
+      );
+      const topic = await CourseMaterialRepository.getTopicMaterial(
+        materialId,
+        isPurchased || roleId == 3
+      );
+
       return res.status(200).send(topic);
     } catch (error) {
       return next(error);
     }
   },
 
-  async updateCourseTopic(req, res, next) {
-    const { courseId, topicId } = req.params;
+  async updateTopicMaterial(req, res, next) {
+    const { courseId, materialId } = req.params;
     const { userId, roleId } = req;
-    const { name } = req.body;
 
     try {
       await CourseRepository.isUserAnInstructor(userId, courseId, roleId);

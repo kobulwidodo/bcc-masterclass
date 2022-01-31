@@ -71,4 +71,14 @@ module.exports = courseRouter
     "/:courseId/topics/:topicId/materials",
     authMid.authorizeLogin,
     CourseMaterialController.getTopicMaterials
+  )
+  .delete(
+    "/:courseId/topics/:topicId/materials",	
+    authMid.authorizeLogin,
+    CourseMaterialController.deleteAllTopicMaterials
+  )
+  .get(
+    "/:courseId/topics/:topicId/materials/:materialId",
+    authMid.authorizeLogin,
+    CourseMaterialController.getMaterialById
   );

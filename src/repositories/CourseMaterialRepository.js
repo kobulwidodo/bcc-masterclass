@@ -15,9 +15,7 @@ module.exports = {
   },
 
   async getTopicMaterials(topicSecretId, isPurchased) {
-    const query = {
-      where: { topic_id: topicSecretId },
-    };
+    const query = { where: { topic_id: topicSecretId } };
 
     if (!isPurchased) query.attributes = ["material_id", "title"];
 
@@ -25,22 +23,24 @@ module.exports = {
   },
 
   async updateTopicMaterial(materialId, payload) {
-    await CourseMaterials.update(payload, { where: { material_id: materialId } });
+    await CourseMaterials.update(payload, {
+      where: { material_id: materialId },
+    });
   },
 
-  async deleteAllTopicMaterials(topicId) {
-    await CourseMaterials.destroy({ where: { topic_id: topicId } });
+  async deleteAllTopicMaterials(topicSecretId) {
+    await CourseMaterials.destroy({ where: { topic_id: topicSecretId } });
   },
 
   async deleteCourseMaterial(materialId) {
     await CourseMaterials.destroy({ where: { material_id: materialId } });
   },
 
-  async getTopicMaterial(materialId) {
-    const material = await CourseMaterials.findOne({
-      where: { material_id: materialId },
-    });
+  async getTopicMaterial(materialId, isPurchased) {
+    const query = { where: { material_id: materialId } };
+    if (!isPurchased) query.attributes = ["material_id", "title"];
 
+    const material = await CourseMaterials.findOne(query);
     if (!material) throw errMsg.notFound("Material");
     return material;
   },
