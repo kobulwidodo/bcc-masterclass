@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
-const { Users } = require("../models");
 const { SALT_ROUND } = require("../config");
+const { Op } = require("sequelize");
+
+const { Users } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
-const { Op } = require("sequelize");
 
 module.exports = {
   async addNewUser({ username, email, password, name, role_id }) {

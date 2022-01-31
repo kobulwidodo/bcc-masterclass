@@ -2,21 +2,26 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class CourseTopics extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate({ Courses }) {
+
+    static associate({ Courses, CourseMaterials }) {
       this.belongsTo(Courses, { foreignKey: "course_id", as: "courses" });
+      this.hasMany(CourseMaterials, {
+        foreignKey: "topic_id",
+        as: "course_materials",
+      });
     }
+
     toJSON() {
-      return { ...this.get(), id: undefined, course_id: undefined }; 
+      return { ...this.get(), id: undefined, course_id: undefined };
     }
   }
   CourseTopics.init(
     {
-      topic_id: DataTypes.STRING,
+      topic_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,

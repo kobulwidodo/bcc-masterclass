@@ -78,7 +78,7 @@ module.exports = {
     const { courseId } = req.params;
     const { userId, roleId } = req;
     try {
-      const check = await CourseRepository.isUserAnInstructor(
+     await CourseRepository.isUserAnInstructor(
         userId,
         courseId,
         roleId

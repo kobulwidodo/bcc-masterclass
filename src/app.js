@@ -9,21 +9,20 @@ const errMid = require("./middlewares/ErrorMiddleware");
 
 const { PORT } = require("./config");
 
-console.log(PORT);
-
 const app = express();
 
-app.use(morgan("common"));
-app.use(cors());
-app.use(cookieParser());
-app.use(express.json());
+app
+  .use(morgan("common"))
+  .use(cors())
+  .use(cookieParser())
+  .use(express.json())
 
-app.use("/api/v1/auth", router.authRouter);
-app.use("/api/v1/courses", router.courseRouter);
-app.use("/api/v1/payment", router.paymentRouter);
+  .use("/api/v1/auth", router.authRouter)
+  .use("/api/v1/courses", router.courseRouter)
+  .use("/api/v1/payment", router.paymentRouter)
 
-app.use(errMid.errorHandler);
-app.use(errMid.notFound);
+  .use(errMid.errorHandler)
+  .use(errMid.notFound);
 
 app.listen(PORT, async () => {
   console.log(`Server is running at port ${PORT}`);

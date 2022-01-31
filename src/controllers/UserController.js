@@ -24,6 +24,8 @@ module.exports = {
 
     try {
       if (confirmPassword !== password) throw errMsg.confirmPasswordError();
+      if (password.length < 6 || password.length > 16)
+        throw errMsg.passwordLengthError();
       const user = await UserRepository.addNewUser(payload);
       return res
         .status(201)
@@ -46,7 +48,7 @@ module.exports = {
       return res
         .cookie("accessToken", token, {
           httpOnly: true,
-          secure: NODE_ENV === "production",
+          secure: NODE_ENV === "PRODUCTION",
         })
         .status(200)
         .send({

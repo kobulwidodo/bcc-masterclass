@@ -1,6 +1,7 @@
 const courseRouter = require("express").Router();
 const CourseController = require("../controllers/CourseController");
 const CourseTopicController = require("../controllers/CourseTopicController");
+const CourseMaterialController = require("../controllers/CourseMaterialController");
 const authMid = require("../middlewares/AuthMiddleware");
 
 module.exports = courseRouter
@@ -60,4 +61,14 @@ module.exports = courseRouter
     "/:courseId/topics/:topicId",
     authMid.authorizeLogin,
     CourseTopicController.deleteTopicById
+  )
+  .post(
+    "/:courseId/topics/:topicId/materials",
+    authMid.authorizeLogin,
+    CourseMaterialController.addNewMaterial
+  )
+  .get(
+    "/:courseId/topics/:topicId/materials",
+    authMid.authorizeLogin,
+    CourseMaterialController.getTopicMaterials
   );

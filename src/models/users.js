@@ -36,12 +36,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          is: {
-            args: "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}",
-            msg:
-              "Password must be at least 6 characters long and contains" +
-              " at least one number, one uppercase and one lowercase letter",
-          },
           notEmpty: { msg: "Password field is required" },
           notNull: { msg: "Password field must exist" },
         },

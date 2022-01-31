@@ -1,4 +1,4 @@
-const { Courses, Users, CourseTopics } = require("../models");
+const { CourseTopics } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
 

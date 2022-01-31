@@ -13,13 +13,20 @@ module.exports = {
 
   async getAllCourses() {
     return await Courses.findAll({
-      include: {
-        model: Users,
-        as: "instructor",
-        attributes: ["user_id", "username", "name"],
-        //because it's inner join, we need to add this key below
-        required: true,
-      },
+      include: [
+        {
+          model: CourseTopics,
+          as: "courseTopics",
+          attributes: ["name"],
+        },
+        {
+          model: Users,
+          as: "instructor",
+          attributes: ["user_id", "username", "name"],
+          //because it's inner join, we need to add this key below
+          required: true,
+        },
+      ],
     });
   },
 
@@ -54,7 +61,23 @@ module.exports = {
   },
 
   async getCourseByCourseId(courseId) {
-    const course = await Courses.findOne({ where: { course_id: courseId } });
+    const course = await Courses.findOne({
+      where: { course_id: courseId },
+      include: [
+        {
+          model: CourseTopics,
+          as: "courseTopics",
+          attributes: ["id","name"],
+        },
+        {
+          model: Users,
+          as: "instructor",
+          attributes: ["user_id", "username", "name"],
+          //because it's inner join, we need to add this key below
+          required: true,
+        },
+      ],
+    });
 
     if (!course) throw errMsg.notFound("Course");
     return course;

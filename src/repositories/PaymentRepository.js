@@ -49,6 +49,9 @@ module.exports = {
   async getPurchasedOrder(courseSecretId, userId) {
     return await CoursePayments.findOne({
       where: {
+        [Op.or]: [
+          {purchase_date: { [Op.not]: null }},
+        ],
         course_id: courseSecretId,
         purchase_date: { [Op.not]: null },
       },

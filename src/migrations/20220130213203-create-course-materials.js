@@ -1,42 +1,48 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('course_topics', {
+    await queryInterface.createTable("course_materials", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
       },
-      topic_id: {
+      material_id: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      name: {
+      title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      course_id : { 
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      video: DataTypes.STRING,
+      file: DataTypes.STRING,
+      topic_id: {
+        allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'courses',
+          model: "course_topics",
           key: "id",
         },
         onDelete: "CASCADE",
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('course_topics');
-  }
+    await queryInterface.dropTable("course_materials");
+  },
 };

@@ -38,6 +38,13 @@ module.exports = {
     };
   },
 
+  passwordLengthError() {
+    return {
+      statusCode: 400,
+      message: "Password must be between 6 and 16 characters",
+    }
+  },
+
   notLoggedIn() {
     return {
       statusCode: 403,
