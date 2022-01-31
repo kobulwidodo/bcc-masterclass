@@ -1,10 +1,8 @@
-const bcrypt = require("bcrypt");
-const { SALT_ROUND } = require("../config");
 const { Op } = require("sequelize");
 
-const { Users } = require("../models");
+const { Users, CoursePayments, Courses } = require("../models");
 const errMsg = require("../utilities/errorMessages");
-const { getRandomId } = require("../utilities/getRandomId");
+
 
 module.exports = {
   async addNewUser({ username, email, password, name, role_id }) {
@@ -59,5 +57,33 @@ module.exports = {
 
   async deleteUserById(userId) {
     await Users.destroy({ where: { user_id: userId } });
+  },
+
+  async editProfile(payload, userId) {
+    await Users.update(payload, { where: { user_id: userId } });
+  },
+
+  async getProfile(userId, isVisited) {
+    const query = {
+      where: { user_id: userId },
+      attributes: { exclude: ["password"] },
+      include: { 
+        model: CoursePayments,
+        as: "course_payments",
+        attributes: ["course_id", "purchase_date"],
+        include: {
+          model: Courses,
+          as: "courses",
+          required: true
+        }
+      }
+    };
+
+    if (isVisited)
+      query.attributes.exclude.push("username","email");
+    
+    const user = await Users.findOne(query);
+    if (!user) throw errMsg.notFound("User");
+    return user;
   },
 };

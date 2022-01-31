@@ -1,5 +1,5 @@
 const authRouter = require("./AuthRouter");
-const userRouter = require("./AuthRouter");
+const userRouter = require("./UserRouter");
 const courseRouter = require("./CourseRouter");
 const paymentRouter = require("./PaymentRouter");
 
