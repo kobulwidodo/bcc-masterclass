@@ -37,4 +37,20 @@ module.exports = {
       return next(error);
     }
   },
+
+  async viewProfile(req, res, next) {
+    const { userId } = req.params;
+    const { userId: accountId } = req;
+
+    try {
+      const user = await UserRepository.getProfile(
+        userId,
+        userId !== accountId
+      );
+
+      return res.status(200).send(user);
+    } catch (error) {
+      return next(error);
+    }
+  },
 };

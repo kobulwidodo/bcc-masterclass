@@ -12,8 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Courses, { foreignKey: "course_id", as: "courses" });
       this.hasMany(CoursePayments, {
         foreignKey: "user_id",
-        as: "course_payments",
+        as: "followed_courses",
       });
+    }
+
+    toJSON() {
+      return { ...this.get(), id: undefined };
     }
   }
   Users.init(

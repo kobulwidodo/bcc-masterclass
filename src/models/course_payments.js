@@ -8,7 +8,12 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined };
+      return {
+        ...this.get(),
+        id: undefined,
+        course_id: undefined,
+        user_id: undefined,
+      };
     }
   }
   CoursePayments.init(
