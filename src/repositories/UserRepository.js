@@ -50,4 +50,14 @@ module.exports = {
 
     return user;
   },
+
+  async getUserById(userId) {
+    const user = await Users.findOne({ where: { user_id: userId } });
+    if (!user) throw errMsg.notFound("User");
+    return user;
+  },
+
+  async deleteUserById(userId) {
+    await Users.destroy({ where: { user_id: userId } });
+  },
 };

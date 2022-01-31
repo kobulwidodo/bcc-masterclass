@@ -31,6 +31,13 @@ module.exports = {
     };
   },
 
+  deleteAdmin() {
+    return {
+      statusCode: 400,
+      message: "You can't delete an admin",
+    }
+  },
+
   invalidPassword() {
     return {
       statusCode: 403,
