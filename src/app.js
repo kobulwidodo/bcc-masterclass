@@ -18,6 +18,7 @@ app
   .use(express.json())
 
   .use("/api/v1/auth", router.authRouter)
+  .use("/api/v1/users", router.userRouter)
   .use("/api/v1/courses", router.courseRouter)
   .use("/api/v1/payment", router.paymentRouter)
 
