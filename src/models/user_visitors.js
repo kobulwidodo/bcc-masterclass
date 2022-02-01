@@ -2,15 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class UserVisitors extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate({ Users }) {
       this.belongsTo(Users, { foreignKey: "user_id", as: "users" });
       this.belongsTo(Users, { foreignKey: "visitor_id", as: "visitors" });
-      // define association here
+    }
+
+    toJSON() {
+      return { ...this.get(), user_id: undefined, visitor_id: undefined };
     }
   }
   UserVisitors.init(
@@ -33,11 +31,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: "CASCADE",
       },
+      visited_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
       modelName: "UserVisitors",
       tableName: "user_visitors",
+      timestamps: false,
     }
   );
   return UserVisitors;

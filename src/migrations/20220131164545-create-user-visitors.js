@@ -19,8 +19,9 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+        unique: true,
       },
-      createdAt: {
+      visited_at: {
         allowNull: false,
         type: DataTypes.DATE,
       },

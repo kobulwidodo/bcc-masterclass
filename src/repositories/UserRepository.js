@@ -2,7 +2,11 @@ const bcrypt = require("bcrypt");
 const { SALT_ROUND } = require("../config");
 const { Op } = require("sequelize");
 
-const { Users, Courses, CoursePayments } = require("../models");
+const { Users, Courses, CoursePayments, UserVisitors } = require("../models");
+UserVisitors.removeAttribute("id");
+const db = require("../models");
+const { QueryTypes } = require("sequelize");
+
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
 
@@ -75,5 +79,63 @@ module.exports = {
     const user = await Users.findOne(query);
     if (!user) throw errMsg.notFound("User");
     return user;
+  },
+
+  async addNewVisitor(userId, visitorId) {
+    const isVisited = await UserVisitors.findOne({
+      where: { visitor_id: visitorId },
+    });
+
+    const visitedAt = new Date();
+    if (isVisited) {
+      await UserVisitors.update(
+        { visited_at: visitedAt },
+        { where: { user_id: userId, visitor_id: visitorId } }
+      );
+      return;
+    }
+
+    await UserVisitors.create({
+      user_id: userId,
+      visitor_id: visitorId,
+      visited_at: visitedAt,
+    });
+  },
+
+  async getRecentVisitors(userId) {
+    // const query = `
+    //   SELECT
+    //     MAX(UV."createdAt") AS "createdAt",
+    //     V.NAME AS "visitor_name",
+    //     V.PROFILE_PICTURE AS "visitor_profile_picture"
+    //   FROM
+    //     USER_VISITORS AS UV
+    //     INNER JOIN USERS AS V ON V.ID = UV.VISITOR_ID
+    //   WHERE UV.USER_ID = ${userId}
+    //   GROUP BY
+    //     UV.USER_ID,
+    //     UV.VISITOR_ID,
+    //     "visitor_name" ,
+    //     "visitor_profile_picture"
+    //   ORDER BY "createdAt" DESC
+    //   LIMIT 3;`;
+    // const recentVisitor = await db.sequelize.query(query, {
+    //   type: QueryTypes.SELECT,
+    // });
+
+    // return recentVisitor.map((visitor) => ({
+    //   ...visitor,
+    //   createdAt: undefined,
+    // }));
+    return await UserVisitors.findAll({
+      where: { user_id: userId },
+      include: {
+        model: Users,
+        as: "visitors",
+        attributes: ["user_id", "name", "profile_picture"],
+      },
+      order: [["visited_at", "DESC"]],
+      limit: 3,
+    });
   },
 };

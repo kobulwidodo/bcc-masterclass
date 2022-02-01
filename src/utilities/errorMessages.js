@@ -10,6 +10,13 @@ module.exports = {
     };
   },
 
+  registerAdmin() {
+    return {
+      statusCode: 403,
+      message: "You can't register as admin",
+    }
+  },
+
   confirmPasswordError() {
     return {
       statusCode: 403,

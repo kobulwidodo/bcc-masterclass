@@ -43,12 +43,26 @@ module.exports = {
     const { userId: accountId } = req;
 
     try {
-      const user = await UserRepository.getProfile(
+      const { dataValues: user } = await UserRepository.getProfile(
         userId,
         userId !== accountId
       );
 
-      return res.status(200).send(user);
+      if (accountId !== userId) {
+        const { id: accountSecretId } = await UserRepository.getUserById(
+          accountId
+        );
+        await UserRepository.addNewVisitor(user.id, accountSecretId);
+      }
+      const  visitor  = await UserRepository.getRecentVisitors(
+        user.id
+      );
+      console.log(visitor);
+      return res.status(200).send({
+        ...user,
+        id: undefined,
+        recent_visitors: visitor,
+      });
     } catch (error) {
       return next(error);
     }

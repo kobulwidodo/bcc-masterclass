@@ -23,6 +23,7 @@ module.exports = {
     const { password, confirmPassword, role_id } = payload;
 
     try {
+      if (role_id === 1) throw errMsg.registerAdmin();
       if (confirmPassword !== password) throw errMsg.confirmPasswordError();
       if (password.length < 6 || password.length > 16)
         throw errMsg.passwordLengthError();
