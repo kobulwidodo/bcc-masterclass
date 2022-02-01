@@ -95,12 +95,21 @@ module.exports = {
   async getInstructorsCourses(req, res, next) {
     const { instructorId } = req.params;
     try {
-      const { id: instructor_id } = await UserRepository.getIdByUserId(
-        instructorId
-      );
+      const courses = await CourseRepository.getInstructorsCourses(instructorId);
       return res
         .status(200)
-        .send(await CourseRepository.getInstructorsCourses(instructor_id));
+        .send(courses);
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async getUserCourses(req, res, next) {
+    const { userId } = req.params;
+
+    try {
+      const courses = await CourseRepository.getUsersCourses(userId);
+      return res.status(200).send(courses);
     } catch (error) {
       return next(error);
     }

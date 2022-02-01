@@ -26,9 +26,14 @@ module.exports = courseRouter
   .put("/:courseId", authMid.authorizeLogin, CourseController.updateCourse)
   .delete("/:courseId", authMid.authorizeLogin, CourseController.deleteCourse)
   .get(
-    "/:instructorId",
+    "/instructor/:instructorId",
     authMid.authorizeLogin,
     CourseController.getInstructorsCourses
+  )
+  .get(
+    "/users/:userId",
+    authMid.authorizeLogin,
+    CourseController.getUserCourses
   )
   .post(
     "/:courseId/topics",
@@ -73,7 +78,7 @@ module.exports = courseRouter
     CourseMaterialController.getTopicMaterials
   )
   .delete(
-    "/:courseId/topics/:topicId/materials",	
+    "/:courseId/topics/:topicId/materials",
     authMid.authorizeLogin,
     CourseMaterialController.deleteAllTopicMaterials
   )

@@ -54,15 +54,26 @@ module.exports = {
         );
         await UserRepository.addNewVisitor(user.id, accountSecretId);
       }
-      const  visitor  = await UserRepository.getRecentVisitors(
-        user.id
-      );
+      const visitor = await UserRepository.getRecentVisitors(user.id);
       console.log(visitor);
       return res.status(200).send({
         ...user,
         id: undefined,
         recent_visitors: visitor,
       });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async getUserCourses(req, res, next) {
+    const { userId } = req.params;
+    const { userId: accountId } = req;
+
+    try {
+      if (userId !== accountId) throw errMsg.unauthorized();
+      const courses = await UserRepository.getUserCourses(userId);
+      return res.status(200).send(courses);
     } catch (error) {
       return next(error);
     }

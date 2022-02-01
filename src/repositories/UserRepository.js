@@ -103,30 +103,6 @@ module.exports = {
   },
 
   async getRecentVisitors(userId) {
-    // const query = `
-    //   SELECT
-    //     MAX(UV."createdAt") AS "createdAt",
-    //     V.NAME AS "visitor_name",
-    //     V.PROFILE_PICTURE AS "visitor_profile_picture"
-    //   FROM
-    //     USER_VISITORS AS UV
-    //     INNER JOIN USERS AS V ON V.ID = UV.VISITOR_ID
-    //   WHERE UV.USER_ID = ${userId}
-    //   GROUP BY
-    //     UV.USER_ID,
-    //     UV.VISITOR_ID,
-    //     "visitor_name" ,
-    //     "visitor_profile_picture"
-    //   ORDER BY "createdAt" DESC
-    //   LIMIT 3;`;
-    // const recentVisitor = await db.sequelize.query(query, {
-    //   type: QueryTypes.SELECT,
-    // });
-
-    // return recentVisitor.map((visitor) => ({
-    //   ...visitor,
-    //   createdAt: undefined,
-    // }));
     return await UserVisitors.findAll({
       where: { user_id: userId },
       include: {

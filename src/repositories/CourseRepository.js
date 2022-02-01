@@ -1,6 +1,7 @@
-const { Courses, Users, CourseTopics } = require("../models");
+const { Courses, Users, CourseTopics, CoursePayments } = require("../models");
 const errMsg = require("../utilities/errorMessages");
 const { getRandomId } = require("../utilities/getRandomId");
+const { Op } = require("sequelize");
 
 module.exports = {
   async addNewCourse(payload) {
@@ -67,7 +68,7 @@ module.exports = {
         {
           model: CourseTopics,
           as: "courseTopics",
-          attributes: ["id","name"],
+          attributes: ["id", "name"],
         },
         {
           model: Users,
@@ -92,6 +93,46 @@ module.exports = {
   },
 
   async getInstructorsCourses(instructorId) {
-    return await Courses.findAll({ where: { instructor_id: instructorId } });
+    return await Courses.findAll({
+      include: [
+        {
+          model: CourseTopics,
+          as: "courseTopics",
+          attributes: ["name"],
+        },
+        {
+          model: Users,
+          as: "instructor",
+          attributes: [],
+          where: { user_id: instructorId },
+        },
+      ],
+    });
+  },
+
+  async getUsersCourses(userId) {
+    return await Courses.findAll({
+      include: [
+        {
+          model: CourseTopics,
+          as: "courseTopics",
+          attributes: ["name"],
+        },
+        {
+          model: CoursePayments,
+          as: "coursePayments",
+          required: true,
+          attributes: ["payment_method", "payment_id", "purchase_date"],
+          where: { purchase_date: { [Op.not]: null } },
+          include: {
+            model: Users,
+            as: "users",
+            where: { user_id: userId },
+            attributes: [],
+            required: true,
+          },
+        },
+      ],
+    });
   },
 };
