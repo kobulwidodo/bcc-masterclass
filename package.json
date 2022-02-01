@@ -1,0 +1,29 @@
+{
+  "name": "bcc-masterclass",
+  "version": "1.0.0",
+  "description": "```\r Submissions from 2021 students will have much higher priority than submissions from 2020, SAP, or higher students.\r Please take note of this before planning to attempt this freepass challenge.\r ```\r ## :love_letter: Invitation Letter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irvanhanif/bcc-masterclass.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irvanhanif/bcc-masterclass/issues"
+  },
+  "homepage": "https://github.com/irvanhanif/bcc-masterclass#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "gitignore": "^0.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
+  }
+}
