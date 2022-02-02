@@ -11,15 +11,16 @@ const {
     buyCourse,
     userCourse
 } = require('./user.controller');
-const { userToken } = require('../middleware');
+const { getAllInstructor } = require('../instructor/instructor.controller');
+const { tokenValidation, userToken } = require('../middleware');
 
-router.get('/', getAllUser);
-router.get('/course', getAllCourse);
-router.get('/:id', userToken, getUser);
+router.get('/course', tokenValidation, userToken, getAllCourse);
+router.get('/instructor', tokenValidation, userToken, getAllInstructor);
+router.get('/:id', tokenValidation, userToken, getUser);
 router.post('/register', register);
 router.post('/login', login);
-router.post('/course/:id', userToken, buyCourse);
-router.get('/course/:id', userToken, userCourse);
-router.put('/update/:id', userToken, updateUser);
+router.post('/course/:id', tokenValidation, userToken, buyCourse);
+router.get('/course/:id', tokenValidation, userToken, userCourse);
+router.put('/update/:id', tokenValidation, userToken, updateUser);
 
 module.exports = router;

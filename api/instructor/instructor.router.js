@@ -10,14 +10,13 @@ const {
     getInstructorCourse,
     getCourse
 } = require('./instructor.controller');
-const { userToken, instructorToken } = require('../middleware');
+const { tokenValidation, userToken, instructorToken } = require('../middleware');
 
-router.get('/', getAllInstructor);
 router.post('/register', register);
-router.post('/course', userToken, instructorToken, postCourse);
-router.get('/course/:id', getCourse);
+router.post('/course', tokenValidation, userToken, instructorToken, postCourse);
+router.get('/course/:id', tokenValidation, userToken, getCourse);
 router.get('/course/all/:id', getInstructorCourse);
-router.put('/course/:id', userToken, instructorToken, updateCourse);
-router.delete('/course/:id', userToken, instructorToken, deleteCourse);
+router.put('/course/:id', tokenValidation, userToken, instructorToken, updateCourse);
+router.delete('/course/:id', tokenValidation, userToken, instructorToken, deleteCourse);
 
 module.exports = router;

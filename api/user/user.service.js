@@ -80,5 +80,18 @@ module.exports = {
                 return callback(null, result);
             }
         );
+    },
+    deleteUser: (req, callback) => {
+        connection.query(
+            `DELETE FROM ${tablename} WHERE id_user = ?`,
+            [
+                req
+            ],
+            (error, result) => {
+                if(error) return callback(error);
+
+                return callback(null, result);
+            }
+        )
     }
 }
