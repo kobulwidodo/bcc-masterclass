@@ -60,7 +60,7 @@ As we have mentioned earlier, we need technology that can support BCC Masterclas
 ## 🧑‍💻Admin
 | Method | Endpoint | Params | Description |
 | ---- | ---- | ------ | -----------|
-| DELETE | /user/admindelete/:slug | - | Delete course by admin |
+| DELETE | /course/admindelete/:slug | - | Delete course by admin |
 |DELETE | /user/deleteuser | email | Delete user by admin |
 |PATCH | /user/editadmin | email, fullName, newPassword, roles (0 = User, 1 = Instructor, 2 = Admin) | Edit user by admin |
 ## :earth_americas: Service Implementation
