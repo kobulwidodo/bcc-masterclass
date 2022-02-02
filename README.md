@@ -45,24 +45,24 @@ As we have mentioned earlier, we need technology that can support BCC Masterclas
 | GET | /course | - | Get all courses |
 | GET | /course/:slug | - | Get course by slug |
 | GET | /course/library/me | - | Get all courses that currently logged in user is enrolled in |
-| POST | /:slug/enroll | - | Enroll in course |
+| POST | /course/:slug/enroll | - | Enroll in course |
 <br>
 
 ## 🧑‍🏫Instructor
 | Method | Endpoint | Params | Description |
 | ---- | ---- | ------ | -----------|
-| POST | /addcourse | courseName, courseDescription, coursePrice | Create new course |
-| PATCH | /:slug | courseName, courseDescription, coursePrice (Optional) | Edit course |
-| DELETE | /:slug | - | Delete course |
+| POST | /course/addcourse | courseName, courseDescription, coursePrice | Create new course |
+| PATCH | /course/:slug | courseName, courseDescription, coursePrice (Optional) | Edit course |
+| DELETE | /course/:slug | - | Delete course |
 
 <br>
 
 ## 🧑‍💻Admin
 | Method | Endpoint | Params | Description |
 | ---- | ---- | ------ | -----------|
-| DELETE | /admindelete/:slug | - | Delete course by admin |
-|DELETE | /deleteuser | email | Delete user by admin |
-|PATCH | /editadmin | email, fullName, newPassword, roles (0 = User, 1 = Instructor, 2 = Admin) | Edit user by admin |
+| DELETE | /user/admindelete/:slug | - | Delete course by admin |
+|DELETE | /user/deleteuser | email | Delete user by admin |
+|PATCH | /user/editadmin | email, fullName, newPassword, roles (0 = User, 1 = Instructor, 2 = Admin) | Edit user by admin |
 ## :earth_americas: Service Implementation
 
 ```text
