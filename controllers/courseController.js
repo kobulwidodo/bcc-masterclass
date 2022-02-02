@@ -13,6 +13,7 @@ export async function viewAllCourse(req, res) {
 
 export async function viewUserCourse(req, res) {
 
+	console.log(res.locals.user);
 	const user = await User.findOne({"_id": res.locals.user}).populate('course');
 	return res.json({
 		message: "Your Course",
@@ -32,10 +33,17 @@ export async function addCourse(req, res){
 };
 
 export async function buyCourse(req, res){
-	const { courseSlug } = req.body;
+	const  courseSlug  = req.params.slug;
 	try {
 		const course = await Course.findOne({ "courseSlug": courseSlug});
 		const user = await User.findOne({"_id": res.locals.user});
+		for (const i of user.course) {
+			if(i.toString() == course._id.toString()) {
+				return res.status(400).json({
+					message: "You already have this course"
+				});
+			}
+		}
 		user.course.push(course);
 		if(user.balance - course.coursePrice >= 0){
 			user.balance -= course.coursePrice;
@@ -45,15 +53,21 @@ export async function buyCourse(req, res){
 			res.status(402).json({"Error": "Insufficient Balance"});
 		}
 	} catch (error) {
+		console.log(error);
 		return res.status(404).json({"Message": "Course not found"});
 	}
 }
 
 export async function viewCourse(req, res){
 	const courseSlug = req.params.slug;
+	if(!courseSlug){
+		return res.status(403).json({
+			message: "No slug provided"
+		})
+	}
 	try {
 		const course = await Course.findOne({ "courseSlug": courseSlug});
-		return res.status(201).json({
+		return res.status(200).json({
 			message: "Course Details",
 			course: course
 		});
@@ -67,9 +81,14 @@ export async function viewCourse(req, res){
 
 export async function editCourse(req, res){
 	const courseSlug = req.params.slug;
-
+	const user = res.locals.user;
 	try {
 		const course = await Course.findOne({ "courseSlug": courseSlug});
+		if(user._id != course.courseAuthor){
+			return res.status(402).json({
+				message: "The course is not yours"
+			})
+		}
 		if (req.body.courseName) {
 			course.courseName = req.body.courseName;
 			await course.save();

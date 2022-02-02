@@ -72,8 +72,13 @@ export async function register(req, res) {
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json({ userId: user._id, fullName: user.fullName, email: user.email, roles: user.roles });
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ err });
+    if(err.name == "MongoServerError"){
+      err.message = "That email is already registered";
+    }
+    if(err.message == "data and salt arguments required"){
+      err.message = "Please enter a password";
+    }
+    res.status(400).json({ error: err.message });
   }
 }
 
@@ -140,6 +145,40 @@ export async function edit(req, res) {
     balance: user.balance,
     roles: user.roles,
   });
+}
+
+export async function adminEdit(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if(!user){
+      return res.json(404, {
+        message: "User not found",
+      })
+    }
+    if (req.body.fullName) {
+      user.fullName = req.body.fullName;
+    }
+    if(req.body.roles){
+      user.roles = req.body.roles;
+    }
+    if (req.body.newPassword) {
+      const salt = await bcrypt.genSalt(10);
+      const password = await bcrypt.hash(req.body.newPassword, salt);
+      user.password = password;
+    }
+    await user.save();
+    return res.status(200).json({
+      message: "Your Account",
+      email: user.email,
+      fullName: user.fullName,
+      balance: user.balance,
+      roles: user.roles,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error
+    })
+  }
 }
 
 export async function deleteuser(req, res) {

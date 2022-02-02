@@ -15,22 +15,54 @@ This application is intended so that FILKOM students can learn and teach. To acc
 
 As we have mentioned earlier, we need technology that can support BCC Masterclass in the future. Please consider these features below:
 
-* A new user can register account to the system ✅ endpoint at /user/register
-* User can edit their account ✅ /user
-* User can see their account ✅ /user
-* User can buy a course ✅ /course/buycourse
-* User can view the courses taken ✅ /course/my
+* A new user can register account to the system ✅
+* User can edit their account ✅
+* User can see their account ✅
+* User can buy a course ✅
+* User can view the courses taken ✅
 * Admin can delete a user ✅
 * Admin can delete an instructor ✅
 * Admin can delete a course ✅
-* A new instructor can register account to the system ✅ /user/register with json body roles = 1
-* Instructor can create new course ✅ /course/addcourse
-* Instructor can edit their course ✅ /course/:slug with PATCH
-* Instructor can delete their course ✅ /course/:slug with DELETE
+* A new instructor can register account to the system ✅
+* Instructor can create new course ✅
+* Instructor can edit their course ✅
+* Instructor can delete their course ✅
 
-Todo
-* Handle error when duplicate email
+<br>
 
+# ✏️ API Documentation
+
+## 🦸User
+
+| Method | Endpooint | Params | Description |
+| -------- | --|---- | -----------|
+| GET | /user | - | See logged in user details |
+| POST | /user/register | fullName, email, password, roles (if required) | Register new user, (0 = User, 1 = Instructor, 2 = Admin) |
+| PATCH | /user | fullName, newPassword, oldPassword | Edit logged in user details |
+| POST | /user/login | email, password | Login |
+| GET | /user/logout | - | Logout |
+| POST | /user/addbalance | balance | Add balance to currently logged in user |
+| GET | /course | - | Get all courses |
+| GET | /course/:slug | - | Get course by slug |
+| GET | /course/library/me | - | Get all courses that currently logged in user is enrolled in |
+| POST | /:slug/enroll | - | Enroll in course |
+<br>
+
+## 🧑‍🏫Instructor
+| Method | Endpoint | Params | Description |
+| ---- | ---- | ------ | -----------|
+| POST | /addcourse | courseName, courseDescription, coursePrice | Create new course |
+| PATCH | /:slug | courseName, courseDescription, coursePrice (Optional) | Edit course |
+| DELETE | /:slug | - | Delete course |
+
+<br>
+
+## 🧑‍💻Admin
+| Method | Endpoint | Params | Description |
+| ---- | ---- | ------ | -----------|
+| DELETE | /admindelete/:slug | - | Delete course by admin |
+|DELETE | /deleteuser | email | Delete user by admin |
+|PATCH | /editadmin | email, fullName, newPassword, roles (0 = User, 1 = Instructor, 2 = Admin) | Edit user by admin |
 ## :earth_americas: Service Implementation
 
 ```text
