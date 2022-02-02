@@ -34,7 +34,7 @@ As we have mentioned earlier, we need technology that can support BCC Masterclas
 
 ## 🦸User
 
-| Method | Endpooint | Params | Description |
+| Method | Endpoint | Params | Description |
 | -------- | --|---- | -----------|
 | GET | /user | - | See logged in user details |
 | POST | /user/register | fullName, email, password, roles (if required) | Register new user, (0 = User, 1 = Instructor, 2 = Admin) |
