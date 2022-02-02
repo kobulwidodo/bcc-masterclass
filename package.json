@@ -24,6 +24,6 @@
     "express": "^4.17.2",
     "gitignore": "^0.7.0",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.3.3"
+    "mysql": "^2.18.1"
   }
 }
