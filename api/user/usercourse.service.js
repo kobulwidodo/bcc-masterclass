@@ -29,6 +29,20 @@ module.exports = {
 
                 return callback(null, result);
             }
-        )
+        );
+    },
+    deleteUserCourse: (req, callback) => {
+        connection.query(
+            `DELETE FROM ${tablename} WHERE id_course = ? AND id_user = ?`,
+            [
+                req.id_course,
+                req.id_user
+            ],
+            (error, result) => {
+                if(error) return callback(error);
+
+                return callback(null, result);
+            }
+        );
     }
 }

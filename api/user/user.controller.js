@@ -4,14 +4,15 @@ const {
     getUser,
     updateUser,
     getUserbyEmail,
-    getUserbyUsername
+    getUserbyUsername,
 } = require('./user.service');
 const {
     getAllCourse
 } = require('../instructor/course.service');
 const {
     buyCourse,
-    userCourse
+    userCourse,
+    deleteUserCourse
 } = require('./usercourse.service')
 const { ERROR, SUCCESS } = require('../respon');
 const { compareSync, genSaltSync, hashSync } = require('bcryptjs');
@@ -118,6 +119,15 @@ module.exports = {
                 delete result[i].id_user;
             }
             return SUCCESS(res, 200, result);
+        });
+    },
+    deleteUserCourse: (req, res) => {
+        req.body.id_course = req.params.id;
+        req.body.id_user = req.decoded.user[0].id_user;
+        deleteUserCourse(req.body, (error, result) => {
+            if(error) return ERROR(res, 500, error);
+
+            return SUCCESS(res, 200, "successfully deleted");
         })
     }
 }

@@ -9,7 +9,8 @@ const {
     login,
     getAllCourse,
     buyCourse,
-    userCourse
+    userCourse,
+    deleteUserCourse
 } = require('./user.controller');
 const { getAllInstructor } = require('../instructor/instructor.controller');
 const { tokenValidation, userToken } = require('../middleware');
@@ -22,5 +23,6 @@ router.post('/login', login);
 router.post('/course/:id', tokenValidation, userToken, buyCourse);
 router.get('/course/:id', tokenValidation, userToken, userCourse);
 router.put('/update/:id', tokenValidation, userToken, updateUser);
+router.delete('/course/:id', tokenValidation, userToken, deleteUserCourse);
 
 module.exports = router;

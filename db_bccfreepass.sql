@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2022 at 01:43 PM
+-- Generation Time: Feb 02, 2022 at 05:57 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -36,6 +36,13 @@ CREATE TABLE `admin` (
   `update_admin_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `username`, `email`, `password`, `create_admin_time`, `update_admin_time`) VALUES
+(1, 'marthastorm', 'marthstorm12@gmail.com', '$2a$10$Hqaui.BzAMhCL870rb0o9OaTr8nqgHQwJCXu0DmBzK1C9yCBvnmcC', '2022-02-02 15:55:01', '2022-02-02 15:55:01');
+
 -- --------------------------------------------------------
 
 --
@@ -50,14 +57,6 @@ CREATE TABLE `course` (
   `create_course_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_course_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `course`
---
-
-INSERT INTO `course` (`id_course`, `name`, `id_user`, `price`, `create_course_time`, `update_course_time`) VALUES
-(1, 'Belajar Programming', 6, 95000, '2022-02-02 09:56:42', '2022-02-02 10:21:01'),
-(2, 'Design UI/UX', 6, 125000, '2022-02-02 10:01:22', '2022-02-02 10:01:22');
 
 -- --------------------------------------------------------
 
@@ -75,18 +74,6 @@ CREATE TABLE `users` (
   `update_users_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `role`, `create_users_time`, `update_users_time`) VALUES
-(1, 'budiheru', 'budiheru@gmail.com', 'dlksjlkjdljsljljdfljlsdjlf', 0, '2022-02-02 03:20:20', '2022-02-02 04:53:16'),
-(2, 'nickfury', 'nickfury@gmail.com', '$2a$10$7ot9gB4IoqNtRr5aeTgWO.91il443yCEZD5hU9.T86jXnaJm9UpOW', 0, '2022-02-02 04:10:07', '2022-02-02 04:53:16'),
-(3, 'dudungyulian', 'dudungyu@gmail.com', '$2a$10$wARU4E1b4kAFmWMsx2oUXu2OkunAhpLa4YOa.LDnEFIKjqB1SH5cm', 0, '2022-02-02 04:21:51', '2022-02-02 04:53:16'),
-(4, 'ririwiliam124', 'riwiliam123@gmail.com', '$2a$10$PaRw.5fFHN6UyMAzHqLeLettswCltWSygqkJvEeim/xqFHl85CwLG', 0, '2022-02-02 04:26:25', '2022-02-02 05:31:23'),
-(5, 'jejekurniawan12', 'jekur@gmail.com', '$2a$10$HWxmrES7tXiKU/C0pMZC2eOVIJUwRBjehVSKGr5AQbCUY5nU.JFo2', 0, '2022-02-02 09:31:58', '2022-02-02 09:35:39'),
-(6, 'huriyanjulian', 'hujul123@gmail.com', '$2a$10$AgVCvGMpOhoKffa5P3Bd4.8SNGPdIompmS/fsrn7rP18vlS0Fv1Hq', 1, '2022-02-02 09:44:32', '2022-02-02 09:44:32');
-
 -- --------------------------------------------------------
 
 --
@@ -98,13 +85,6 @@ CREATE TABLE `user_course` (
   `id_user` smallint(6) NOT NULL,
   `buy_course_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user_course`
---
-
-INSERT INTO `user_course` (`id_course`, `id_user`, `buy_course_time`) VALUES
-(1, 5, '2022-02-02 12:27:03');
 
 --
 -- Indexes for dumped tables
@@ -144,19 +124,19 @@ ALTER TABLE `user_course`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` smallint(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_admin` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id_course` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_course` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
