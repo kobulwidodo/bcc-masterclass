@@ -107,7 +107,7 @@ module.exports = {
 
       await CourseTopicRepository.deleteCourseTopic(topicId);
 
-      return res.status(200).send(successMsg.delete("course's topic"));
+      return res.status(200).send(successMsg.delete("all course's topic"));
     } catch (error) {
       return next(error);
     }

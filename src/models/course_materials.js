@@ -23,13 +23,35 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: { msg: "Material's title is required" },
+          notNull: { msg: "Material's title must exist" },
+        },
       },
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          notEmpty: { msg: "Material's name is required" },
+          notNull: { msg: "Material's name must exist" },
+        },
       },
-      video: DataTypes.STRING,
-      file: DataTypes.STRING,
+      video: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: "Material's video is required" },
+          notNull: { msg: "Material's video must exist" },
+        },
+      },
+      file: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: "Material's file is required" },
+          notNull: { msg: "Material's file must exist" },
+        },
+      },
       topic_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
