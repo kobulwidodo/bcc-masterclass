@@ -20,6 +20,12 @@ module.exports = {
         price,
       } = await CourseRepository.getCourseByCourseId(courseId);
 
+      const isPurchased = await PaymentRepository.getPurchasedOrder(
+        courseSecretId,
+        userId
+      );
+      if (isPurchased) throw errMsg.alreadyPurchased();
+
       if (price == 0.0 && payment_method !== "FREE")
         throw errMsg.purchasingFreeCourse();
       else if (price > 0.0 && payment_method === "FREE")
@@ -31,12 +37,6 @@ module.exports = {
       if (payment_method === "FREE") {
         total_price = 0.0;
         message = successMsg.payment();
-        const isPurchased = await PaymentRepository.getPurchasedOrder(
-          courseSecretId,
-          userId
-        );
-
-        if (isPurchased) throw errMsg.alreadyPurchased();
       }
 
       const payload = {
