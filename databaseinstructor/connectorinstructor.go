@@ -16,7 +16,7 @@ func CreateInstructor(nama string, kode string) bool {
 	var newInstructor Instructor
 	newInstructor.Nama = nama
 	newInstructor.Kode = kode
-	file, err := os.OpenFile("instruktor.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("instruktor.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return false
 	}
