@@ -31,7 +31,7 @@ func CreateInstructor(nama string, kode string) bool {
 			return false
 		}
 	}
-	if err := os.Truncate("instruktor.txt", 0); err != nil {
+	if err := os.Truncate("instruktor.csv", 0); err != nil {
 		return false
 	}
 	InstructorDatas = append(InstructorDatas, newInstructor)
